@@ -2,8 +2,8 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const { body, validationResult } = require('express-validator');
+
 const app = express();
 const PORT = 3000;
 
@@ -12,17 +12,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public')); // Assuming index.html is in a folder named 'public'
 
-// Connect to SQLite database
-const db = new sqlite3.Database(':memory:', (err) => {
+// Connect to SQLite database (file-based)
+const db = new sqlite3.Database('./students.db', (err) => {
     if (err) {
         console.error(err.message);
     }
-    console.log('Connected to the in-memory SQLite database.');
+    console.log('Connected to the SQLite database.');
 });
 
-// Create students table
+// Create students table if it doesn't exist
 db.serialize(() => {
-    db.run(`CREATE TABLE students (
+    db.run(`CREATE TABLE IF NOT EXISTS students (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         surname TEXT,
@@ -43,19 +43,6 @@ app.post('/api/students', [
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, surname, age, school } = req.body;
-    const sql = `INSERT INTO students (name, surname, age, school) VALUES (?, ?, ?, ?)`;
-    
-    db.run(sql, [name, surname, age, school], function(err) {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.status(201).json({ id: this.lastID, name, surname });
-    });
-});
-
-// API endpoint to receive student information
-app.post('/api/students', (req, res) => {
     const { name, surname, age, school } = req.body;
     const sql = `INSERT INTO students (name, surname, age, school) VALUES (?, ?, ?, ?)`;
     
