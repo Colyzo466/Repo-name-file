@@ -38,16 +38,16 @@ A RESTful API built with Node.js and SQLite to manage student information. This 
    
 
 2. **Install dependencies**:
-   ```bash
+   bash
    npm install
-   ```
+   
 
 ## Usage
 
 1. **Start the server**:
-   ```bash
+   bash
    node server.js
-   ```
+   
 
    The server will start on `http://localhost:3000`.
 
@@ -69,7 +69,7 @@ A RESTful API built with Node.js and SQLite to manage student information. This 
        "age": 20,
        "school": "Example High School"
      }
-     ```
+     
    - **Response**:
      - `201 Created`: Returns the created student ID and name.
      - `400 Bad Request`: Returns validation errors if input data is invalid.
@@ -89,7 +89,7 @@ A RESTful API built with Node.js and SQLite to manage student information. This 
        "age": 21,
        "school": "Updated High School"
      }
-     ```
+     
    - **Response**:
      - `200 OK`: Returns the updated student information.
      - `404 Not Found`: Returns an error if the student ID does not exist.
@@ -119,7 +119,3 @@ Contributions are welcome! To contribute, please fork the repository and submit 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-This README provides a clear, professional structure that includes all essential information for users and contributors.
